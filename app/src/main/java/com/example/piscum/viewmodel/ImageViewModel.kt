@@ -13,16 +13,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ImageViewModel @Inject constructor(private val repository: ImageRepository) : ViewModel(){
-    var page: Int=1
-    var limit: Int=10
 
     private val _response = MutableLiveData<List<Image>>()
     val responseImage : LiveData<List<Image>>
         get() = _response
 
-    init {
-        getAllImages(page, limit)
-    }
 
     fun getAllImages(page: Int, limit: Int) = viewModelScope.launch {
         repository.getImages(page, limit).let { response ->

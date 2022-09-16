@@ -1,55 +1,43 @@
 package com.example.piscum.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.piscum.databinding.ImageItemLayoutBinding
+import com.example.piscum.R
+import com.example.piscum.fragments.HomeFeedFragmentDirections
 import com.example.piscum.models.Image
 
-class ImageAdapter : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
+class ImageAdapter(private val images: ArrayList<Image>) :
+    RecyclerView.Adapter<ImageAdapter.ViewHolder>() {
 
-    inner class MyViewHolder(val binding: ImageItemLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    private val diffcallback = object : DiffUtil.ItemCallback<Image>() {
-        override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(oldItem: Image, newItem: Image): Boolean {
-            return oldItem == newItem
-        }
-
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val image: ImageView = itemView.findViewById(R.id.image)
+        val author: TextView = itemView.findViewById(R.id.author)
     }
 
-    val differ = AsyncListDiffer(this, diffcallback)
-    var images: List<Image>
-        get() = differ.currentList
-        set(value) {
-            differ.submitList(value)
-        }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(
-            ImageItemLayoutBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageAdapter.ViewHolder {
+        val context = parent.context
+        val inflater = LayoutInflater.from(context)
+        val contactView = inflater.inflate(R.layout.image_item_layout, parent, false)
+        return ViewHolder(contactView)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ImageAdapter.ViewHolder, position: Int) {
         images[position].blur = images[position].download_url + "/?blur"
         images[position].grayscale = images[position].download_url + "?grayscale"
-        val currentImage = images[position]
-
-        holder.binding.apply {
-            author.text = currentImage.author
-            image.load(currentImage.download_url)
+        val image: Image = images[position]
+        val textView = viewHolder.author
+        textView.text = image.author
+        val imageView = viewHolder.image
+        imageView.load(image.download_url)
+        viewHolder.itemView.setOnClickListener { mView ->
+            val direction = HomeFeedFragmentDirections.actionHomeFeedFragmentToDetailFragment(image)
+            mView.findNavController().navigate(direction)
         }
 
     }
@@ -57,6 +45,4 @@ class ImageAdapter : RecyclerView.Adapter<ImageAdapter.MyViewHolder>() {
     override fun getItemCount(): Int {
         return images.size
     }
-
-
 }
