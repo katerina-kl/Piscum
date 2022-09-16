@@ -56,7 +56,7 @@ class HomeFeedFragment : Fragment(R.layout.fragment_home_feed) {
 
 
     private fun setUpRecyclerView() {
-        imageAdapter = ImageAdapter(imagesList)
+        imageAdapter = ImageAdapter(requireContext(),imagesList)
 
         binding.recyclerView.apply {
             adapter = imageAdapter

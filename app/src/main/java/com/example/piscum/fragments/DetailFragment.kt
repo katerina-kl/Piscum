@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.piscum.R
 import com.example.piscum.databinding.FragmentDetailBinding
 import com.example.piscum.models.Image
@@ -39,19 +41,31 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     private fun populateUi() {
 
         binding.apply {
-            imageView.load(image.download_url)
+            Glide.with(requireContext())
+                .load(image.download_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imageView)
             author.text = image.author
             width.text = image.width.toString()
             height.text = image.height.toString()
         }
         binding.blur.setOnClickListener {
-            binding.imageView.load(image.blur)
+            Glide.with(requireContext())
+                .load(image.blur)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imageView)
         }
         binding.normal.setOnClickListener {
-            binding.imageView.load(image.download_url)
+            Glide.with(requireContext())
+                .load(image.download_url)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imageView)
         }
         binding.grayscale.setOnClickListener {
-            binding.imageView.load(image.grayscale)
+            Glide.with(requireContext())
+                .load(image.grayscale)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.imageView)
         }
     }
 
