@@ -28,9 +28,10 @@ class ImageAdapter(private val images: ArrayList<Image>) :
     }
 
     override fun onBindViewHolder(viewHolder: ImageAdapter.ViewHolder, position: Int) {
-        images[position].blur = images[position].download_url + "/?blur"
-        images[position].grayscale = images[position].download_url + "?grayscale"
+
         val image: Image = images[position]
+        image.blur = images[position].download_url + "/?blur"
+        image.grayscale = images[position].download_url + "?grayscale"
         val textView = viewHolder.author
         textView.text = image.author
         val imageView = viewHolder.image
