@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFeedFragment">
+
+    <fragment
+        android:id="@+id/homeFeedFragment"
+        android:name="com.example.piscum.fragments.HomeFeedFragment"
+        android:label="fragment_home_feed"
+        tools:layout="@layout/fragment_home_feed">
+        <action
+            android:id="@+id/action_homeFeedFragment_to_detailFragment"
+            app:destination="@id/detailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.piscum.fragments.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail">
+        <action
+            android:id="@+id/action_detailFragment_to_homeFeedFragment"
+            app:destination="@id/homeFeedFragment" />
+        <argument
+            android:name="image"
+            app:argType="com.example.piscum.models.Image" />
+    </fragment>
+</navigation>
