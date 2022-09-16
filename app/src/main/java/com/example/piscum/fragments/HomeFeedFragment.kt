@@ -1,11 +1,10 @@
 package com.example.piscum.fragments
 
 import android.os.Bundle
-import android.os.Handler
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,7 @@ class HomeFeedFragment : Fragment(R.layout.fragment_home_feed) {
 
     var page = 1
     var isLoading = false
-    val limit = 1
+    val limit = 10
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +43,14 @@ class HomeFeedFragment : Fragment(R.layout.fragment_home_feed) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
+
+        viewModel.responseImage.observe(viewLifecycleOwner) { listImages ->
+            imagesList.addAll(listImages)
+            imageAdapter.notifyDataSetChanged()
+            isLoading = false
+            binding.progressBar.visibility = View.GONE
+        }
+
         getPage()
     }
 
@@ -84,12 +91,6 @@ class HomeFeedFragment : Fragment(R.layout.fragment_home_feed) {
         isLoading = true
         binding.progressBar.visibility = View.VISIBLE
         viewModel.getAllImages(page, limit)
-        viewModel.responseImage.observe(requireActivity()) { listImages ->
-            imagesList.addAll(listImages)
-            imageAdapter.notifyDataSetChanged()
-            isLoading = false
-            binding.progressBar.visibility = View.GONE
-        }
     }
 
     override fun onDestroy() {
