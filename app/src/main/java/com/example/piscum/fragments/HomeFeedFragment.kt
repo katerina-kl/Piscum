@@ -38,7 +38,6 @@ class HomeFeedFragment : Fragment(R.layout.fragment_home_feed) {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
