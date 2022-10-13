@@ -1,6 +1,6 @@
 # App autoreloads an infinite list of images 
 
-# Image Details:where app shows image information and the user can change image to 
+Image Details:where app shows image information and the user can change image to 
 
   ~normal
   ~blur
