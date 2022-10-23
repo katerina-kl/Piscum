@@ -45,9 +45,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 .load(image.download_url)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(binding.imageView)
-            author.text = image.author
-            width.text = image.width.toString()
-            height.text = image.height.toString()
         }
         binding.blur.setOnClickListener {
             Glide.with(requireContext())
